@@ -18,6 +18,7 @@ import {
   Share,
   Alert,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors, theme } from '../../constants/theme';
 
 const { width } = Dimensions.get('window');
@@ -92,7 +93,17 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
 
   const handleGroupPress = (groupId: string) => {
     console.log('Group pressed:', groupId);
-    // TODO: Navigate to group detail screen
+    
+    // Determine user role based on group
+    const userRole = groupId === 'my-group-1' ? 'admin' : 'member';
+    const groupName = groupId === 'my-group-1' ? 'Family Home Fund' : 'Business Investment';
+    
+    // Navigate to GroupDetail screen in the parent stack navigator
+    navigation.getParent()?.navigate('GroupDetail', {
+      groupId,
+      groupName,
+      userRole,
+    });
   };
 
   const handleShareInvite = async (groupName: string, groupId: string) => {
@@ -145,7 +156,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
             </View>
           </View>
           <TouchableOpacity style={styles.searchButton}>
-            <Text style={styles.searchIcon}>🔍</Text>
+            <Icon name="search" size={20} color={colors.metallicGold} style={styles.searchIcon} />
             <View style={styles.searchGlow} />
           </TouchableOpacity>
         </Animated.View>
@@ -169,7 +180,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
               >
                 <View style={styles.buttonShine} />
                 <View style={styles.buttonIcon}>
-                  <Text style={styles.buttonEmoji}>➕</Text>
+                  <Icon name="add" size={20} color={colors.metallicGold} style={styles.buttonEmoji} />
                   <View style={styles.iconGlow} />
                 </View>
                 <Text style={styles.buttonText}>Create Group</Text>
@@ -185,7 +196,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
             >
               <View style={styles.buttonShine} />
               <View style={styles.buttonIcon}>
-                <Text style={styles.buttonEmoji}>🔗</Text>
+                <Icon name="link" size={20} color={colors.metallicGold} style={styles.buttonEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <Text style={styles.buttonText}>Join Group</Text>
@@ -212,7 +223,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
             </TouchableOpacity>
           </View>
 
-          {/* Active Groups */}
+          {/* Admin Group View */}
           <TouchableOpacity 
             style={styles.groupCard}
             onPress={() => handleGroupPress('my-group-1')}
@@ -221,11 +232,16 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
             <View style={styles.cardShine} />
             <View style={styles.groupHeader}>
               <View style={styles.groupIcon}>
-                <Text style={styles.groupEmoji}>🏠</Text>
+                <Icon name="home" size={20} color={colors.metallicGold} style={styles.groupEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <View style={styles.groupInfo}>
-                <Text style={styles.groupTitle}>Family Home Fund</Text>
+                <View style={styles.titleRow}>
+                  <Text style={styles.groupTitle}>Family Home Fund</Text>
+                  <View style={styles.adminBadge}>
+                    <Text style={styles.adminText}>👑 ADMIN</Text>
+                  </View>
+                </View>
                 <Text style={styles.groupSubtitle}>Target: ₦500,000</Text>
               </View>
               <TouchableOpacity 
@@ -233,10 +249,27 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
                 onPress={() => handleShareInvite('Family Home Fund', 'my-group-1')}
                 activeOpacity={0.8}
               >
-                <Text style={styles.shareIcon}>📤</Text>
+                <Icon name="share" size={18} color={colors.metallicGold} style={styles.shareIcon} />
                 <View style={styles.shareGlow} />
               </TouchableOpacity>
             </View>
+            
+            {/* Admin Controls */}
+            <View style={styles.adminControls}>
+              <TouchableOpacity style={styles.adminButton}>
+                <Icon name="group" size={16} color={colors.metallicGold} style={styles.adminButtonIcon} />
+                <Text style={styles.adminButtonText}>Manage Members</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.adminButton}>
+                <Icon name="account-balance-wallet" size={16} color={colors.metallicGold} style={styles.adminButtonIcon} />
+                <Text style={styles.adminButtonText}>Collect Funds</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.adminButton}>
+                <Icon name="analytics" size={16} color={colors.metallicGold} style={styles.adminButtonIcon} />
+                <Text style={styles.adminButtonText}>Analytics</Text>
+              </TouchableOpacity>
+            </View>
+
             <View style={styles.groupStats}>
               <View style={styles.statItem}>
                 <Text style={styles.statValue}>4/8</Text>
@@ -254,6 +287,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
             <View style={styles.cardAccent} />
           </TouchableOpacity>
 
+          {/* Member Group View */}
           <TouchableOpacity 
             style={styles.groupCard}
             onPress={() => handleGroupPress('my-group-2')}
@@ -262,11 +296,16 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
             <View style={styles.cardShine} />
             <View style={styles.groupHeader}>
               <View style={styles.groupIcon}>
-                <Text style={styles.groupEmoji}>💼</Text>
+                <Icon name="business" size={20} color={colors.metallicGold} style={styles.groupEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <View style={styles.groupInfo}>
-                <Text style={styles.groupTitle}>Business Investment</Text>
+                <View style={styles.titleRow}>
+                  <Text style={styles.groupTitle}>Business Investment</Text>
+                  <View style={styles.memberBadge}>
+                    <Text style={styles.memberText}>👤 MEMBER</Text>
+                  </View>
+                </View>
                 <Text style={styles.groupSubtitle}>Target: ₦1,000,000</Text>
               </View>
               <TouchableOpacity 
@@ -274,10 +313,39 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
                 onPress={() => handleShareInvite('Business Investment', 'my-group-2')}
                 activeOpacity={0.8}
               >
-                <Text style={styles.shareIcon}>📤</Text>
+                <Icon name="share" size={18} color={colors.metallicGold} style={styles.shareIcon} />
                 <View style={styles.shareGlow} />
               </TouchableOpacity>
             </View>
+            
+            {/* Member Actions */}
+            <View style={styles.memberActions}>
+              <TouchableOpacity style={styles.memberButton}>
+                <Text style={styles.memberButtonIcon}>💳</Text>
+                <Text style={styles.memberButtonText}>Make Payment</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.memberButton}>
+                <Text style={styles.memberButtonIcon}>📱</Text>
+                <Text style={styles.memberButtonText}>View History</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.memberButton}>
+                <Text style={styles.memberButtonIcon}>💬</Text>
+                <Text style={styles.memberButtonText}>Group Chat</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Payment Status */}
+            <View style={styles.paymentStatus}>
+              <View style={styles.paymentInfo}>
+                <Text style={styles.paymentLabel}>Next Payment Due:</Text>
+                <Text style={styles.paymentDate}>Dec 15, 2024</Text>
+              </View>
+              <View style={styles.paymentAmount}>
+                <Text style={styles.paymentValue}>₦100,000</Text>
+                <Text style={styles.paymentStatusText}>Pending</Text>
+              </View>
+            </View>
+
             <View style={styles.groupStats}>
               <View style={styles.statItem}>
                 <Text style={styles.statValue}>6/10</Text>
@@ -326,7 +394,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
             >
               <View style={styles.cardShine} />
               <View style={styles.groupIcon}>
-                <Text style={styles.groupEmoji}>💼</Text>
+                <Icon name="business" size={20} color={colors.metallicGold} style={styles.groupEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <Text style={styles.groupTitle}>Business Circle</Text>
@@ -345,7 +413,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
             >
               <View style={styles.cardShine} />
               <View style={styles.groupIcon}>
-                <Text style={styles.groupEmoji}>🏠</Text>
+                <Icon name="home" size={20} color={colors.metallicGold} style={styles.groupEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <Text style={styles.groupTitle}>Home Savers</Text>
@@ -896,6 +964,136 @@ const styles = StyleSheet.create({
     color: colors.matteWhite,
     opacity: 0.9,
     flex: 1,
+  },
+  // Admin and Member View Styles
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 2,
+  },
+  adminBadge: {
+    backgroundColor: 'rgba(212, 175, 55, 0.2)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(212, 175, 55, 0.4)',
+  },
+  adminText: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: colors.metallicGold,
+  },
+  memberBadge: {
+    backgroundColor: 'rgba(110, 110, 110, 0.2)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(110, 110, 110, 0.4)',
+  },
+  memberText: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: colors.slateGray,
+  },
+  adminControls: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 16,
+    paddingHorizontal: 4,
+  },
+  adminButton: {
+    flex: 1,
+    backgroundColor: 'rgba(212, 175, 55, 0.1)',
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    alignItems: 'center',
+    marginHorizontal: 2,
+    borderWidth: 1,
+    borderColor: 'rgba(212, 175, 55, 0.3)',
+  },
+  adminButtonIcon: {
+    fontSize: 16,
+    marginBottom: 4,
+  },
+  adminButtonText: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: colors.metallicGold,
+    textAlign: 'center',
+  },
+  memberActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 16,
+    paddingHorizontal: 4,
+  },
+  memberButton: {
+    flex: 1,
+    backgroundColor: 'rgba(248, 248, 248, 0.1)',
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    alignItems: 'center',
+    marginHorizontal: 2,
+    borderWidth: 1,
+    borderColor: 'rgba(248, 248, 248, 0.2)',
+  },
+  memberButtonIcon: {
+    fontSize: 16,
+    marginBottom: 4,
+  },
+  memberButtonText: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: colors.matteWhite,
+    textAlign: 'center',
+  },
+  paymentStatus: {
+    backgroundColor: 'rgba(248, 248, 248, 0.05)',
+    borderRadius: 12,
+    padding: 12,
+    marginVertical: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(212, 175, 55, 0.2)',
+  },
+  paymentInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  paymentLabel: {
+    fontSize: 12,
+    color: colors.matteWhite,
+    opacity: 0.8,
+  },
+  paymentDate: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: colors.metallicGold,
+  },
+  paymentAmount: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  paymentValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: colors.metallicGold,
+  },
+  paymentStatusText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#FF6B6B',
+    backgroundColor: 'rgba(255, 107, 107, 0.2)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
   },
 });
 

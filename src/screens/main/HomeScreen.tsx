@@ -16,6 +16,7 @@ import {
   Animated,
   Easing,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors, theme } from '../../constants/theme';
 
 const { width } = Dimensions.get('window');
@@ -116,7 +117,7 @@ const HomeScreen: React.FC = () => {
             </View>
           </View>
           <TouchableOpacity style={styles.notificationButton}>
-            <Text style={styles.notificationIcon}>🔔</Text>
+            <Icon name="notifications" size={20} color={colors.metallicGold} style={styles.notificationIcon} />
             <View style={styles.notificationBadge} />
             <View style={styles.notificationPulse} />
           </TouchableOpacity>
@@ -139,10 +140,10 @@ const HomeScreen: React.FC = () => {
           <View style={styles.walletHeader}>
             <View style={styles.walletTitleContainer}>
               <Text style={styles.walletTitle}>Wallet Balance</Text>
-              <Text style={styles.walletIcon}>💰</Text>
+              <Icon name="account-balance-wallet" size={24} color={colors.metallicGold} style={styles.walletIcon} />
             </View>
             <TouchableOpacity style={styles.refreshButton}>
-              <Text style={styles.refreshIcon}>🔄</Text>
+              <Icon name="refresh" size={18} color={colors.metallicGold} style={styles.refreshIcon} />
               <View style={styles.refreshGlow} />
             </TouchableOpacity>
           </View>
@@ -160,7 +161,7 @@ const HomeScreen: React.FC = () => {
               >
                 <View style={styles.actionButtonGlow} />
                 <View style={styles.topUpShine} />
-                <Text style={styles.actionIcon}>💳</Text>
+                <Icon name="payment" size={20} color={colors.metallicGold} style={styles.actionIcon} />
                 <Text style={styles.actionText}>Top Up</Text>
               </TouchableOpacity>
             </Animated.View>
@@ -195,7 +196,7 @@ const HomeScreen: React.FC = () => {
             >
               <View style={styles.cardShine} />
               <View style={styles.quickActionIcon}>
-                <Text style={styles.quickActionEmoji}>👥</Text>
+                <Icon name="group" size={20} color={colors.metallicGold} style={styles.quickActionEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <Text style={styles.quickActionTitle}>Create Group</Text>
@@ -240,7 +241,7 @@ const HomeScreen: React.FC = () => {
             >
               <View style={styles.cardShine} />
               <View style={styles.quickActionIcon}>
-                <Text style={styles.quickActionEmoji}>📊</Text>
+                <Icon name="analytics" size={20} color={colors.metallicGold} style={styles.quickActionEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <Text style={styles.quickActionTitle}>Transactions</Text>
@@ -270,7 +271,7 @@ const HomeScreen: React.FC = () => {
           {/* Empty State */}
           <View style={styles.emptyState}>
             <View style={styles.emptyStateIcon}>
-              <Text style={styles.emptyStateEmoji}>👥</Text>
+              <Icon name="group" size={32} color={colors.slateGray} style={styles.emptyStateEmoji} />
             </View>
             <Text style={styles.emptyStateTitle}>No Groups Yet</Text>
             <Text style={styles.emptyStateSubtitle}>
@@ -305,7 +306,7 @@ const HomeScreen: React.FC = () => {
           {/* Empty State */}
           <View style={styles.emptyActivity}>
             <View style={styles.emptyActivityIcon}>
-              <Text style={styles.emptyActivityEmoji}>📈</Text>
+              <Icon name="trending-up" size={32} color={colors.slateGray} style={styles.emptyActivityEmoji} />
             </View>
             <Text style={styles.emptyActivityTitle}>No Activity Yet</Text>
             <Text style={styles.emptyActivitySubtitle}>

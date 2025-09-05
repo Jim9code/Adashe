@@ -7,6 +7,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors, theme } from '../constants/theme';
 
 // Import main screens
@@ -15,18 +16,19 @@ import GroupsScreen from '../screens/main/GroupsScreen';
 import WalletScreen from '../screens/main/WalletScreen';
 import ProfileScreen from '../screens/main/ProfileScreen';
 import CreateGroupScreen from '../screens/main/CreateGroupScreen';
+import GroupDetailScreen from '../screens/main/GroupDetailScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 // Custom Tab Icon Component
 const TabIcon = ({ 
-  icon, 
+  iconName, 
   label, 
   focused, 
   size = 24 
 }: { 
-  icon: string; 
+  iconName: string; 
   label: string; 
   focused: boolean; 
   size?: number;
@@ -37,13 +39,11 @@ const TabIcon = ({
         styles.iconWrapper,
         focused && styles.iconWrapperActive
       ]}>
-        <Text style={[
-          styles.iconText,
-          { fontSize: size },
-          focused && styles.iconTextActive
-        ]}>
-          {icon}
-        </Text>
+        <Icon 
+          name={iconName}
+          size={size}
+          color={focused ? colors.metallicGold : colors.slateGray}
+        />
       </View>
       <Text style={[
         styles.tabLabel,
@@ -68,11 +68,15 @@ const TabNavigator = () => {
           height: 80,
           paddingBottom: 20,
           paddingTop: 10,
+          paddingHorizontal: 0,
           ...theme.shadows.lg,
         },
         tabBarShowLabel: false,
         tabBarItemStyle: {
           paddingVertical: 5,
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
         },
       }}
     >
@@ -82,7 +86,7 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <TabIcon 
-              icon="🏠" 
+              iconName="home" 
               label="Home" 
               focused={focused}
               size={22}
@@ -96,7 +100,7 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <TabIcon 
-              icon="👥" 
+              iconName="group" 
               label="Groups" 
               focused={focused}
               size={22}
@@ -110,7 +114,7 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <TabIcon 
-              icon="💰" 
+              iconName="account-balance-wallet" 
               label="Wallet" 
               focused={focused}
               size={22}
@@ -124,7 +128,7 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <TabIcon 
-              icon="👤" 
+              iconName="person" 
               label="Profile" 
               focused={focused}
               size={22}
@@ -161,6 +165,11 @@ const MainNavigator = () => {
         component={CreateGroupScreen}
         options={{ title: 'Create Group' }}
       />
+      <Stack.Screen 
+        name="GroupDetail" 
+        component={GroupDetailScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
@@ -183,13 +192,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(212, 175, 55, 0.2)',
     borderWidth: 1,
     borderColor: 'rgba(212, 175, 55, 0.4)',
-  },
-  iconText: {
-    color: colors.slateGray,
-    fontSize: 20,
-  },
-  iconTextActive: {
-    color: colors.metallicGold,
   },
   tabLabel: {
     fontSize: 10,

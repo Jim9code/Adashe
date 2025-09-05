@@ -120,8 +120,12 @@ export type AuthStackParamList = {
 
 export type MainStackParamList = {
   Tabs: undefined;
-  GroupDetail: { groupId: string };
   CreateGroup: undefined;
+  GroupDetail: { 
+    groupId: string; 
+    groupName: string; 
+    userRole: 'admin' | 'member'; 
+  };
 };
 
 export type TabParamList = {

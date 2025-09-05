@@ -17,6 +17,7 @@ import {
   Easing,
   Alert,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors, theme } from '../../constants/theme';
 
 const { width } = Dimensions.get('window');
@@ -141,7 +142,7 @@ const ProfileScreen: React.FC = () => {
             </View>
           </View>
           <TouchableOpacity style={styles.notificationButton}>
-            <Text style={styles.notificationIcon}>🔔</Text>
+            <Icon name="notifications" size={20} color={colors.metallicGold} style={styles.notificationIcon} />
             <View style={styles.notificationBadge} />
             <View style={styles.notificationPulse} />
           </TouchableOpacity>
@@ -249,7 +250,7 @@ const ProfileScreen: React.FC = () => {
               activeOpacity={0.8}
             >
               <View style={styles.settingIcon}>
-                <Text style={styles.settingEmoji}>👤</Text>
+                <Icon name="person" size={20} color={colors.metallicGold} style={styles.settingEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <View style={styles.settingDetails}>
@@ -265,7 +266,7 @@ const ProfileScreen: React.FC = () => {
               activeOpacity={0.8}
             >
               <View style={styles.settingIcon}>
-                <Text style={styles.settingEmoji}>🔒</Text>
+                <Icon name="security" size={20} color={colors.metallicGold} style={styles.settingEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <View style={styles.settingDetails}>
@@ -301,7 +302,7 @@ const ProfileScreen: React.FC = () => {
               activeOpacity={0.8}
             >
               <View style={styles.settingIcon}>
-                <Text style={styles.settingEmoji}>🔔</Text>
+                <Icon name="notifications" size={20} color={colors.metallicGold} style={styles.settingEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <View style={styles.settingDetails}>
@@ -321,7 +322,7 @@ const ProfileScreen: React.FC = () => {
               activeOpacity={0.8}
             >
               <View style={styles.settingIcon}>
-                <Text style={styles.settingEmoji}>⚙️</Text>
+                <Icon name="settings" size={20} color={colors.metallicGold} style={styles.settingEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <View style={styles.settingDetails}>
@@ -381,7 +382,7 @@ const ProfileScreen: React.FC = () => {
           ]}
         >
           <Text style={styles.versionText}>Adashe v1.0.0</Text>
-          <Text style={styles.versionSubtext}>Built with ❤️ for financial freedom</Text>
+          <Text style={styles.versionSubtext}>Built with love for financial freedom</Text>
         </Animated.View>
       </ScrollView>
     </SafeAreaView>

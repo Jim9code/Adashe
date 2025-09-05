@@ -16,6 +16,7 @@ import {
   Animated,
   Easing,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors, theme } from '../../constants/theme';
 
 const { width } = Dimensions.get('window');
@@ -170,10 +171,10 @@ const WalletScreen: React.FC = () => {
           <View style={styles.balanceHeader}>
             <View style={styles.balanceTitleContainer}>
               <Text style={styles.balanceTitle}>Total Balance</Text>
-              <Text style={styles.balanceIcon}>💰</Text>
+              <Icon name="account-balance-wallet" size={24} color={colors.metallicGold} style={styles.balanceIcon} />
             </View>
             <TouchableOpacity style={styles.refreshButton}>
-              <Text style={styles.refreshIcon}>🔄</Text>
+              <Icon name="refresh" size={18} color={colors.metallicGold} style={styles.refreshIcon} />
               <View style={styles.refreshGlow} />
             </TouchableOpacity>
           </View>
@@ -191,7 +192,7 @@ const WalletScreen: React.FC = () => {
               >
                 <View style={styles.actionButtonGlow} />
                 <View style={styles.topUpShine} />
-                <Text style={styles.actionIcon}>💳</Text>
+                <Icon name="payment" size={20} color={colors.metallicGold} style={styles.actionIcon} />
                 <Text style={styles.actionText}>Top Up</Text>
               </TouchableOpacity>
             </Animated.View>
@@ -224,7 +225,7 @@ const WalletScreen: React.FC = () => {
           <View style={styles.breakdownGrid}>
             <View style={styles.breakdownCard}>
               <View style={styles.breakdownIcon}>
-                <Text style={styles.breakdownEmoji}>📈</Text>
+                <Icon name="trending-up" size={20} color={colors.metallicGold} style={styles.breakdownEmoji} />
                 <View style={styles.iconGlow} />
               </View>
               <Text style={styles.breakdownAmount}>₦8,500</Text>
@@ -305,7 +306,7 @@ const WalletScreen: React.FC = () => {
           >
             <View style={styles.cardShine} />
             <View style={styles.transactionIcon}>
-              <Text style={styles.transactionEmoji}>💳</Text>
+              <Icon name="payment" size={18} color={colors.metallicGold} style={styles.transactionEmoji} />
               <View style={styles.iconGlow} />
             </View>
             <View style={styles.transactionDetails}>
@@ -372,18 +373,18 @@ const WalletScreen: React.FC = () => {
             },
           ]}
         >
-          <Text style={styles.sectionTitle}>🔒 Security Tips</Text>
+          <Text style={styles.sectionTitle}>Security Tips</Text>
           <View style={styles.securityCard}>
             <View style={styles.securityItem}>
-              <Text style={styles.securityIcon}>🛡️</Text>
+              <Icon name="shield" size={16} color={colors.metallicGold} style={styles.securityIcon} />
               <Text style={styles.securityText}>Never share your wallet PIN</Text>
             </View>
             <View style={styles.securityItem}>
-              <Text style={styles.securityIcon}>🔐</Text>
+              <Icon name="lock" size={16} color={colors.metallicGold} style={styles.securityIcon} />
               <Text style={styles.securityText}>Enable biometric authentication</Text>
             </View>
             <View style={styles.securityItem}>
-              <Text style={styles.securityIcon}>📱</Text>
+              <Icon name="security" size={16} color={colors.metallicGold} style={styles.securityIcon} />
               <Text style={styles.securityText}>Keep your app updated</Text>
             </View>
           </View>
