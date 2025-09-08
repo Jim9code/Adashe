@@ -126,6 +126,38 @@ export type MainStackParamList = {
     groupName: string; 
     userRole: 'admin' | 'member'; 
   };
+  Notifications: undefined;
+  Transactions: undefined;
+  JoinGroup: undefined;
+  ManageMembers: {
+    groupId: string;
+    groupName: string;
+  };
+  Payment: {
+    groupId?: string;
+    groupName?: string;
+    amount?: number;
+    recipientId?: string;
+    recipientName?: string;
+  };
+  TopUp: undefined;
+  Withdraw: undefined;
+  PhoneConfirmation: {
+    phoneNumber?: string;
+    userId?: string;
+  };
+  UserProfileView: {
+    userId: string;
+    userName?: string;
+    userEmail?: string;
+    userPhone?: string;
+    userRole?: 'admin' | 'member';
+    joinDate?: string;
+    isVerified?: boolean;
+    groupsCount?: number;
+    totalContributions?: number;
+    reliabilityScore?: number;
+  };
 };
 
 export type TabParamList = {

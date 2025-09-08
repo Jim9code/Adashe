@@ -21,7 +21,11 @@ import { colors, theme } from '../../constants/theme';
 
 const { width } = Dimensions.get('window');
 
-const WalletScreen: React.FC = () => {
+interface WalletScreenProps {
+  navigation: any;
+}
+
+const WalletScreen: React.FC<WalletScreenProps> = ({ navigation }) => {
   // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
@@ -98,12 +102,12 @@ const WalletScreen: React.FC = () => {
 
   const handleTopUp = () => {
     console.log('Top Up pressed');
-    // TODO: Navigate to top up screen
+    navigation.navigate('TopUp');
   };
 
   const handleWithdraw = () => {
     console.log('Withdraw pressed');
-    // TODO: Navigate to withdraw screen
+    navigation.navigate('Withdraw');
   };
 
   const handleTransactionPress = (transactionId: string) => {
@@ -192,8 +196,12 @@ const WalletScreen: React.FC = () => {
               >
                 <View style={styles.actionButtonGlow} />
                 <View style={styles.topUpShine} />
-                <Icon name="payment" size={20} color={colors.metallicGold} style={styles.actionIcon} />
+                <View style={styles.actionIconContainer}>
+                  <Icon name="add-circle" size={24} color={colors.charcoalGray} />
+                  <View style={styles.iconPulse} />
+                </View>
                 <Text style={styles.actionText}>Top Up</Text>
+                <View style={styles.actionAccent} />
               </TouchableOpacity>
             </Animated.View>
             <Animated.View style={{ transform: [{ scale: withdrawPulseAnim }] }}>
@@ -204,8 +212,12 @@ const WalletScreen: React.FC = () => {
               >
                 <View style={styles.actionButtonGlow} />
                 <View style={styles.withdrawShine} />
-                <Text style={styles.actionIcon}>🏦</Text>
-                <Text style={styles.actionText}>Withdraw</Text>
+                <View style={styles.actionIconContainer}>
+                  <Icon name="account-balance-wallet" size={24} color={colors.metallicGold} />
+                  <View style={styles.iconPulse} />
+                </View>
+                <Text style={[styles.actionText, styles.withdrawText]}>Withdraw</Text>
+                <View style={styles.actionAccent} />
               </TouchableOpacity>
             </Animated.View>
           </View>
@@ -604,6 +616,7 @@ const styles = StyleSheet.create({
   balanceActions: {
     flexDirection: 'row',
     gap: 12,
+    justifyContent: 'space-between',
   },
   balanceActionButton: {
     flex: 1,
@@ -647,24 +660,59 @@ const styles = StyleSheet.create({
   primaryAction: {
     backgroundColor: colors.metallicGold,
     borderWidth: 2,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: 'rgba(255, 255, 255, 0.4)',
     shadowColor: colors.metallicGold,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.6,
+    shadowRadius: 12,
+    elevation: 8,
   },
   secondaryAction: {
-    backgroundColor: 'rgba(248, 248, 248, 0.1)',
-    borderWidth: 1,
-    borderColor: 'rgba(212, 175, 55, 0.3)',
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: 'rgba(212, 175, 55, 0.5)',
+    shadowColor: colors.metallicGold,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 4,
   },
-  actionIcon: {
-    fontSize: 16,
+  actionIconContainer: {
+    position: 'relative',
+    marginRight: 8,
+  },
+  iconPulse: {
+    position: 'absolute',
+    top: -2,
+    left: -2,
+    right: -2,
+    bottom: -2,
+    borderRadius: 14,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    zIndex: -1,
+  },
+  actionAccent: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 3,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 12,
   },
   actionText: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '700',
     color: colors.charcoalGray,
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 1,
+  },
+  withdrawText: {
+    color: colors.metallicGold,
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    fontWeight: '700',
+    fontSize: 14,
   },
   breakdownContainer: {
     paddingHorizontal: 24,

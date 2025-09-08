@@ -22,7 +22,11 @@ import { colors, theme } from '../../constants/theme';
 
 const { width } = Dimensions.get('window');
 
-const ProfileScreen: React.FC = () => {
+interface ProfileScreenProps {
+  navigation: any;
+}
+
+const ProfileScreen: React.FC<ProfileScreenProps> = ({ navigation }) => {
   // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
@@ -86,6 +90,10 @@ const ProfileScreen: React.FC = () => {
     Alert.alert('Settings', `${setting} settings will be available soon!`);
   };
 
+  const handleNotificationPress = () => {
+    navigation.navigate('Notifications');
+  };
+
   const handleLogout = () => {
     Alert.alert(
       'Logout',
@@ -141,7 +149,11 @@ const ProfileScreen: React.FC = () => {
               <Text style={styles.statusText}>Verified</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.notificationButton}>
+          <TouchableOpacity 
+            style={styles.notificationButton}
+            onPress={handleNotificationPress}
+            activeOpacity={0.8}
+          >
             <Icon name="notifications" size={20} color={colors.metallicGold} style={styles.notificationIcon} />
             <View style={styles.notificationBadge} />
             <View style={styles.notificationPulse} />
@@ -177,7 +189,13 @@ const ProfileScreen: React.FC = () => {
           <View style={styles.profileInfo}>
             <Text style={styles.userName}>John Doe</Text>
             <Text style={styles.userEmail}>john.doe@example.com</Text>
-            <Text style={styles.userPhone}>+234 800 000 0000</Text>
+            <View style={styles.phoneContainer}>
+              <Text style={styles.userPhone}>+234 800 000 0000</Text>
+              <View style={styles.phoneStatus}>
+                <Icon name="verified" size={16} color={colors.emeraldGreen} />
+                <Text style={styles.phoneStatusText}>Verified</Text>
+              </View>
+            </View>
           </View>
 
           <TouchableOpacity 
@@ -615,6 +633,26 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.matteWhite,
     opacity: 0.8,
+  },
+  phoneContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 4,
+  },
+  phoneStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(80, 200, 120, 0.1)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  phoneStatusText: {
+    fontSize: 12,
+    color: colors.emeraldGreen,
+    fontWeight: '600',
+    marginLeft: 4,
   },
   editButton: {
     backgroundColor: colors.metallicGold,

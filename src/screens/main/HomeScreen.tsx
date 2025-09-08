@@ -21,7 +21,11 @@ import { colors, theme } from '../../constants/theme';
 
 const { width } = Dimensions.get('window');
 
-const HomeScreen: React.FC = () => {
+interface HomeScreenProps {
+  navigation: any;
+}
+
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
@@ -77,7 +81,35 @@ const HomeScreen: React.FC = () => {
 
   const handleQuickAction = (action: string) => {
     console.log(`Quick action: ${action}`);
-    // TODO: Navigate to respective screens
+    
+    switch (action) {
+      case 'create-group':
+        navigation.navigate('CreateGroup');
+        break;
+      case 'view-transactions':
+        navigation.navigate('Transactions');
+        break;
+      case 'topup':
+        navigation.navigate('TopUp');
+        break;
+      case 'withdraw':
+        navigation.navigate('Withdraw');
+        break;
+      case 'pay-contribution':
+        // Navigate to wallet tab for financial actions
+        navigation.navigate('Tabs', { screen: 'WalletTab' });
+        break;
+      case 'join-group':
+        // Navigate to join group screen
+        navigation.navigate('JoinGroup');
+        break;
+      default:
+        console.log(`Unhandled action: ${action}`);
+    }
+  };
+
+  const handleNotificationPress = () => {
+    navigation.navigate('Notifications');
   };
 
   return (
@@ -116,7 +148,11 @@ const HomeScreen: React.FC = () => {
               <Text style={styles.statusText}>Active</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.notificationButton}>
+          <TouchableOpacity 
+            style={styles.notificationButton}
+            onPress={handleNotificationPress}
+            activeOpacity={0.8}
+          >
             <Icon name="notifications" size={20} color={colors.metallicGold} style={styles.notificationIcon} />
             <View style={styles.notificationBadge} />
             <View style={styles.notificationPulse} />
@@ -161,19 +197,30 @@ const HomeScreen: React.FC = () => {
               >
                 <View style={styles.actionButtonGlow} />
                 <View style={styles.topUpShine} />
-                <Icon name="payment" size={20} color={colors.metallicGold} style={styles.actionIcon} />
+                <View style={styles.actionIconContainer}>
+                  <Icon name="add-circle" size={24} color={colors.charcoalGray} />
+                  <View style={styles.iconPulse} />
+                </View>
                 <Text style={styles.actionText}>Top Up</Text>
+                <View style={styles.actionAccent} />
               </TouchableOpacity>
             </Animated.View>
-            <TouchableOpacity 
-              style={[styles.walletActionButton, styles.secondaryAction]}
-              onPress={() => handleQuickAction('withdraw')}
-              activeOpacity={0.8}
-            >
-              <View style={styles.actionButtonGlow} />
-              <Text style={styles.actionIcon}>🏦</Text>
-              <Text style={styles.actionText}>Withdraw</Text>
-            </TouchableOpacity>
+            <Animated.View style={{ transform: [{ scale: topUpPulseAnim }] }}>
+              <TouchableOpacity 
+                style={[styles.walletActionButton, styles.secondaryAction]}
+                onPress={() => handleQuickAction('withdraw')}
+                activeOpacity={0.8}
+              >
+                <View style={styles.actionButtonGlow} />
+                <View style={styles.withdrawShine} />
+                <View style={styles.actionIconContainer}>
+                  <Icon name="account-balance-wallet" size={24} color={colors.metallicGold} />
+                  <View style={styles.iconPulse} />
+                </View>
+                <Text style={[styles.actionText, styles.withdrawText]}>Withdraw</Text>
+                <View style={styles.actionAccent} />
+              </TouchableOpacity>
+            </Animated.View>
           </View>
         </Animated.View>
 
@@ -532,6 +579,7 @@ const styles = StyleSheet.create({
   walletActions: {
     flexDirection: 'row',
     gap: 12,
+    justifyContent: 'space-between',
   },
   walletActionButton: {
     flex: 1,
@@ -563,27 +611,71 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
     borderRadius: 12,
   },
+  withdrawShine: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 2,
+    backgroundColor: 'rgba(212, 175, 55, 0.4)',
+    borderRadius: 12,
+  },
   primaryAction: {
     backgroundColor: colors.metallicGold,
     borderWidth: 2,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: 'rgba(255, 255, 255, 0.4)',
     shadowColor: colors.metallicGold,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
-    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.6,
+    shadowRadius: 12,
+    elevation: 8,
   },
   secondaryAction: {
-    backgroundColor: 'rgba(248, 248, 248, 0.1)',
-    borderWidth: 1,
-    borderColor: 'rgba(212, 175, 55, 0.3)',
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: 'rgba(212, 175, 55, 0.5)',
+    shadowColor: colors.metallicGold,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 4,
   },
-  actionIcon: {
-    fontSize: 16,
+  actionIconContainer: {
+    position: 'relative',
+    marginRight: 8,
+  },
+  iconPulse: {
+    position: 'absolute',
+    top: -2,
+    left: -2,
+    right: -2,
+    bottom: -2,
+    borderRadius: 14,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    zIndex: -1,
+  },
+  actionAccent: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 3,
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 12,
   },
   actionText: {
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '700',
     color: colors.charcoalGray,
+    textShadowColor: 'rgba(0, 0, 0, 0.2)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 1,
+  },
+  withdrawText: {
+    color: colors.metallicGold,
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    fontWeight: '700',
+    fontSize: 14,
   },
   quickActionsContainer: {
     paddingHorizontal: 24,

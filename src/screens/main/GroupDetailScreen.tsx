@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Animated,
   Share,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colors, theme } from '../../constants/theme';
@@ -105,17 +106,50 @@ const GroupDetailScreen: React.FC<GroupDetailScreenProps> = ({ navigation, route
 
   const handleMakePayment = () => {
     // Navigate to payment screen
-    console.log('Navigate to payment screen');
+    navigation.navigate('Payment', {
+      groupId: groupData.id,
+      groupName: groupData.name,
+      amount: groupData.monthlyContribution,
+    });
   };
 
   const handleManageMembers = () => {
     // Navigate to member management screen
-    console.log('Navigate to member management');
+    navigation.navigate('ManageMembers', {
+      groupId: groupData.id,
+      groupName: groupData.name,
+    });
   };
 
   const handleGroupChat = () => {
-    // Navigate to group chat screen
-    console.log('Navigate to group chat');
+    Alert.alert(
+      '🚀 Coming Soon!',
+      'Group Chat feature is currently under development. Stay tuned for real-time messaging, file sharing, and group collaboration tools!',
+      [
+        {
+          text: 'Got it!',
+          style: 'default',
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
+  const handleViewMemberProfile = (member: any) => {
+    navigation.navigate('UserProfileView', {
+      userId: member.id,
+      userName: member.name,
+      userEmail: `${member.name.toLowerCase().replace(' ', '.')}@example.com`,
+      userPhone: '+234 801 234 5678',
+      userRole: 'member',
+      joinDate: 'January 2024',
+      isVerified: true,
+      groupsCount: 2,
+      totalContributions: member.contribution * 12,
+      reliabilityScore: 90
+    });
   };
 
   return (
@@ -275,9 +309,13 @@ const GroupDetailScreen: React.FC<GroupDetailScreenProps> = ({ navigation, route
           {groupData.members.map((member, index) => (
             <View key={member.id} style={styles.memberCard}>
               <View style={styles.memberInfo}>
-                <View style={styles.memberAvatar}>
+                <TouchableOpacity 
+                  style={styles.memberAvatar}
+                  onPress={() => handleViewMemberProfile(member)}
+                  activeOpacity={0.8}
+                >
                   <Text style={styles.memberInitial}>{member.name.charAt(0)}</Text>
-                </View>
+                </TouchableOpacity>
                 <View style={styles.memberDetails}>
                   <Text style={styles.memberName}>{member.name}</Text>
                   <Text style={styles.memberRole}>

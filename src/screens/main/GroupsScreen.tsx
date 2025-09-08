@@ -88,7 +88,7 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
 
   const handleJoinGroup = () => {
     console.log('Join Group pressed');
-    // TODO: Navigate to join group screen
+    navigation.navigate('JoinGroup');
   };
 
   const handleGroupPress = (groupId: string) => {
@@ -155,10 +155,6 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
               <Text style={styles.statusText}>Active</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.searchButton}>
-            <Icon name="search" size={20} color={colors.metallicGold} style={styles.searchIcon} />
-            <View style={styles.searchGlow} />
-          </TouchableOpacity>
         </Animated.View>
 
         {/* Quick Actions */}
@@ -328,7 +324,18 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
                 <Text style={styles.memberButtonIcon}>📱</Text>
                 <Text style={styles.memberButtonText}>View History</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.memberButton}>
+              <TouchableOpacity 
+                style={styles.memberButton}
+                onPress={() => {
+                  Alert.alert(
+                    '🚀 Coming Soon!',
+                    'Group Chat feature is currently under development. Stay tuned for real-time messaging, file sharing, and group collaboration tools!',
+                    [{ text: 'Got it!', style: 'default' }],
+                    { cancelable: true }
+                  );
+                }}
+                activeOpacity={0.8}
+              >
                 <Text style={styles.memberButtonIcon}>💬</Text>
                 <Text style={styles.memberButtonText}>Group Chat</Text>
               </TouchableOpacity>
@@ -364,87 +371,6 @@ const GroupsScreen: React.FC<GroupsScreenProps> = ({ navigation }) => {
           </TouchableOpacity>
         </Animated.View>
 
-        {/* Popular Groups Section */}
-        <Animated.View 
-          style={[
-            styles.popularContainer,
-            {
-              opacity: fadeAnim,
-              transform: [{ translateY: slideAnim }],
-            },
-          ]}
-        >
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Popular Groups</Text>
-            <TouchableOpacity>
-              <Text style={styles.viewAllText}>Browse All</Text>
-            </TouchableOpacity>
-          </View>
-
-          <ScrollView 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.popularScrollContent}
-          >
-            {/* Sample Popular Groups */}
-            <TouchableOpacity 
-              style={styles.popularGroupCard}
-              onPress={() => handleGroupPress('popular-1')}
-              activeOpacity={0.8}
-            >
-              <View style={styles.cardShine} />
-              <View style={styles.groupIcon}>
-                <Icon name="business" size={20} color={colors.metallicGold} style={styles.groupEmoji} />
-                <View style={styles.iconGlow} />
-              </View>
-              <Text style={styles.groupTitle}>Business Circle</Text>
-              <Text style={styles.groupSubtitle}>Entrepreneurs</Text>
-              <View style={styles.groupStats}>
-                <Text style={styles.groupStat}>12 members</Text>
-                <Text style={styles.groupStat}>₦50k/month</Text>
-              </View>
-              <View style={styles.cardAccent} />
-            </TouchableOpacity>
-
-            <TouchableOpacity 
-              style={styles.popularGroupCard}
-              onPress={() => handleGroupPress('popular-2')}
-              activeOpacity={0.8}
-            >
-              <View style={styles.cardShine} />
-              <View style={styles.groupIcon}>
-                <Icon name="home" size={20} color={colors.metallicGold} style={styles.groupEmoji} />
-                <View style={styles.iconGlow} />
-              </View>
-              <Text style={styles.groupTitle}>Home Savers</Text>
-              <Text style={styles.groupSubtitle}>Property Investment</Text>
-              <View style={styles.groupStats}>
-                <Text style={styles.groupStat}>8 members</Text>
-                <Text style={styles.groupStat}>₦100k/month</Text>
-              </View>
-              <View style={styles.cardAccent} />
-            </TouchableOpacity>
-
-            <TouchableOpacity 
-              style={styles.popularGroupCard}
-              onPress={() => handleGroupPress('popular-3')}
-              activeOpacity={0.8}
-            >
-              <View style={styles.cardShine} />
-              <View style={styles.groupIcon}>
-                <Text style={styles.groupEmoji}>🎓</Text>
-                <View style={styles.iconGlow} />
-              </View>
-              <Text style={styles.groupTitle}>Education Fund</Text>
-              <Text style={styles.groupSubtitle}>Student Support</Text>
-              <View style={styles.groupStats}>
-                <Text style={styles.groupStat}>15 members</Text>
-                <Text style={styles.groupStat}>₦25k/month</Text>
-              </View>
-              <View style={styles.cardAccent} />
-            </TouchableOpacity>
-          </ScrollView>
-        </Animated.View>
 
         {/* Tips Section */}
         <Animated.View 
@@ -581,29 +507,6 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.3)',
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 1,
-  },
-  searchButton: {
-    position: 'relative',
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    backgroundColor: 'rgba(248, 248, 248, 0.1)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'rgba(212, 175, 55, 0.3)',
-  },
-  searchIcon: {
-    fontSize: 20,
-  },
-  searchGlow: {
-    position: 'absolute',
-    top: 4,
-    left: 4,
-    right: 4,
-    bottom: 4,
-    borderRadius: 18,
-    backgroundColor: 'rgba(212, 175, 55, 0.1)',
   },
   quickActionsContainer: {
     paddingHorizontal: 24,
@@ -861,26 +764,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: colors.matteWhite,
     opacity: 0.8,
-  },
-  popularContainer: {
-    paddingHorizontal: 24,
-    marginBottom: 24,
-  },
-  popularScrollContent: {
-    paddingRight: 24,
-  },
-  popularGroupCard: {
-    width: 160,
-    backgroundColor: 'rgba(248, 248, 248, 0.1)',
-    borderRadius: 16,
-    padding: 16,
-    marginRight: 12,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'rgba(212, 175, 55, 0.2)',
-    ...theme.shadows.md,
-    position: 'relative',
-    overflow: 'hidden',
   },
   cardShine: {
     position: 'absolute',

@@ -47,7 +47,7 @@ const SplashScreen = () => {
       Animated.timing(logoAccentAnim, {
         toValue: 1,
         duration: 600,
-        easing: Easing.out(Easing.cubic),
+        easing: Easing.out(Easing.quad),
         useNativeDriver: true,
       }),
       // Content fade in

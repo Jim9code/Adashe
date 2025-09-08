@@ -17,6 +17,15 @@ import WalletScreen from '../screens/main/WalletScreen';
 import ProfileScreen from '../screens/main/ProfileScreen';
 import CreateGroupScreen from '../screens/main/CreateGroupScreen';
 import GroupDetailScreen from '../screens/main/GroupDetailScreen';
+import NotificationScreen from '../screens/main/NotificationScreen';
+import TransactionsScreen from '../screens/main/TransactionsScreen';
+import JoinGroupScreen from '../screens/main/JoinGroupScreen';
+import ManageMembersScreen from '../screens/main/ManageMembersScreen';
+import PaymentScreen from '../screens/main/PaymentScreen';
+import TopUpScreen from '../screens/main/TopUpScreen';
+import WithdrawScreen from '../screens/main/WithdrawScreen';
+import PhoneNumberConfirmationScreen from '../screens/main/PhoneNumberConfirmationScreen';
+import UserProfileViewScreen from '../screens/main/UserProfileViewScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -168,6 +177,51 @@ const MainNavigator = () => {
       <Stack.Screen 
         name="GroupDetail" 
         component={GroupDetailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="Notifications" 
+        component={NotificationScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="Transactions" 
+        component={TransactionsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="JoinGroup" 
+        component={JoinGroupScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="ManageMembers" 
+        component={ManageMembersScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="Payment" 
+        component={PaymentScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="TopUp" 
+        component={TopUpScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="Withdraw" 
+        component={WithdrawScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="PhoneConfirmation" 
+        component={PhoneNumberConfirmationScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="UserProfileView" 
+        component={UserProfileViewScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

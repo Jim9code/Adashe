@@ -34,6 +34,8 @@ const CreateGroupScreen: React.FC<CreateGroupScreenProps> = ({ navigation }) => 
   const [memberLimit, setMemberLimit] = useState('');
   const [contributionAmount, setContributionAmount] = useState('');
   const [loading, setLoading] = useState(false);
+  const [groupCode, setGroupCode] = useState('');
+  const [showCodeSection, setShowCodeSection] = useState(false);
 
   // Animation values
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -92,6 +94,14 @@ const CreateGroupScreen: React.FC<CreateGroupScreenProps> = ({ navigation }) => 
     return `https://adashe.app/join/${groupId}`;
   };
 
+  const generateGroupCode = (name: string): string => {
+    // Create a unique code based on group name and timestamp
+    const namePrefix = name.replace(/\s+/g, '').substring(0, 4).toUpperCase();
+    const timestamp = Date.now().toString().slice(-4);
+    const randomSuffix = Math.random().toString(36).substring(2, 4).toUpperCase();
+    return `${namePrefix}${timestamp}${randomSuffix}`;
+  };
+
   const handleCreateGroup = async () => {
     if (!groupName || !targetAmount || !memberLimit || !contributionAmount) {
       Alert.alert('Error', 'Please fill in all required fields');
@@ -112,14 +122,16 @@ const CreateGroupScreen: React.FC<CreateGroupScreenProps> = ({ navigation }) => 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      // Generate invite link
+      // Generate invite link and group code
       const groupId = 'group_' + Date.now();
       const inviteLink = generateInviteLink(groupId);
+      const newGroupCode = generateGroupCode(groupName);
+      setGroupCode(newGroupCode);
 
-      // Show success with invite link
+      // Show success with invite link and code
       Alert.alert(
         'Group Created Successfully! 🎉',
-        `Your group "${groupName}" has been created.\n\nInvite Link: ${inviteLink}`,
+        `Your group "${groupName}" has been created.\n\nGroup Code: ${newGroupCode}\nInvite Link: ${inviteLink}`,
         [
           {
             text: 'Share Invite Link',
